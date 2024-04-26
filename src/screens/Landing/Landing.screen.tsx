@@ -26,11 +26,17 @@ export const LandingScreen: React.FC<LandingProps> = () => {
           }
           color="GrayText"
         />
-        <Button
-          title="Empezar"
-          onClick={() => navigate('/auth', { state: { type: 'login' } })}
-          style={{ width: '10%' }}
-        />
+        <Box sx={{ display: 'flex', columnGap: 2, py: 2 }}>
+          <Button
+            title="Empezar"
+            onClick={() => navigate('/auth', { state: { type: 'signup' } })}
+            style={{ width: '10%' }}
+          />
+          <Button
+            title="Ingresar"
+            onClick={() => navigate('/auth', { state: { type: 'login' } })}
+          />
+        </Box>
       </Box>
     </>
   );

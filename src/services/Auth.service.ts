@@ -19,6 +19,10 @@ export const AuthService = (() => {
     }
   };
 
+  const logout = () => {
+    StorageService.deleteTokens();
+  };
+
   type AuthServiceError = 'LOGIN-FAIL';
 
   const newError = (code: AuthServiceError, error?: any) => {
@@ -28,5 +32,5 @@ export const AuthService = (() => {
     };
   };
 
-  return { login };
+  return { login, logout };
 })();

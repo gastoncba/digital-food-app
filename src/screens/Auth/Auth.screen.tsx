@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid } from '@mui/material';
+import { Container } from '@mui/material';
 
 import { Login } from './Login';
 
@@ -27,10 +27,8 @@ export const AuthScreen: React.FC<AuthProps> = () => {
   };
 
   return (
-    <Grid container justifyContent={'center'} sx={{ py: 2 }}>
-      <Grid item xs={12} sm={8} md={6} lg={5} xl={5}>
-        {renderScreen()}
-      </Grid>
-    </Grid>
+    <Container maxWidth="sm" sx={{ py: 2 }}>
+      {renderScreen()}
+    </Container>
   );
 };

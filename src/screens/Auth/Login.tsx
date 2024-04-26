@@ -1,8 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Form, Paragraph } from '../../components';
 import { AuthService } from '../../services';
-import { AppStore } from '../../redux/store';
 import { createMenu } from '../../redux/states';
 
 interface LoginProps {}
@@ -12,16 +12,18 @@ interface LoginValues {
 }
 
 export const Login: React.FC<LoginProps> = () => {
-  const menuState = useSelector((store: AppStore) => store.menu);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const login = async (values: LoginValues) => {
     const result = await AuthService.login(values);
     dispatch(createMenu(result.menu));
+    navigate('/app/home');
   };
 
   return (
     <>
+      <Paragraph variant="h3" text={'Que bueno volverte a ver !'} />
       <Paragraph
         text={'Ingresa el código de tu menu'}
         variant="h5"
@@ -39,7 +41,6 @@ export const Login: React.FC<LoginProps> = () => {
         submitText="Guardar"
         onAction={login}
       />
-      <Paragraph text={'menu: ' + menuState.name} />
     </>
   );
 };

@@ -10,7 +10,7 @@ export const StorageService = (() => {
   const getTokens = () => {
     const at = sessionStorage.getItem('at');
     if (!at) {
-      throw newError('TOKENS-NOT-FOUND');
+      throw newError('TOKENS-NOT-FOUND', 'NO HAY TOKEN');
     }
     return at;
   };
