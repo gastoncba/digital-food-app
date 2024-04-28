@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import { RoutesController } from '../src/routes/RouterController.routes';
 import { themeMaterial } from './settings';
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={themeMaterial}>
+        <ToastContainer />
         <Provider store={store}>
           <RoutesController />
         </Provider>

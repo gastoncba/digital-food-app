@@ -7,6 +7,7 @@ import {
   HomeScreen,
   NotFoundScreen,
   SectionScreen,
+  FoodScreen,
 } from '../screens';
 import { ProtectedRoute } from './ProtectedRoute.routes';
 import { Navbar } from '../components';
@@ -51,6 +52,7 @@ export const Router: React.FC<RouterProps> = () => {
               >
                 <Route path="/home" element={<HomeScreen />} />
                 <Route path="/sections" element={<SectionScreen />} />
+                <Route path="/foods" element={<FoodScreen />} />
                 <Route path="/config" element={<div>config</div>} />
                 <Route path="*" element={<NotFoundScreen />} />
               </Route>

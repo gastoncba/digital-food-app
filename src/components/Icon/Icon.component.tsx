@@ -6,6 +6,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Menu from '@mui/icons-material/Menu';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
+import MoreHorizTwoTone from '@mui/icons-material/MoreHorizTwoTone';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export type IconT =
   | 'PLUS'
@@ -14,7 +17,10 @@ export type IconT =
   | 'VISIBILITY'
   | 'VISIBILITY-OFF'
   | 'MENU'
-  | 'DRAG-HANDLE';
+  | 'DRAG-HANDLE'
+  | 'MORE-HORIZONT'
+  | 'DELETE'
+  | 'EDIT';
 
 export interface IconProps {
   type: IconT;
@@ -42,6 +48,12 @@ export const Icon: React.FunctionComponent<IconProps> = ({
       return <Menu sx={sx} className={className} />;
     case 'DRAG-HANDLE':
       return <DragHandleIcon sx={sx} className={className} />;
+    case 'MORE-HORIZONT':
+      return <MoreHorizTwoTone sx={sx} className={className} />;
+    case 'EDIT':
+      return <EditIcon sx={sx} className={className} />;
+    case 'DELETE':
+      return <DeleteIcon sx={sx} className={className} />;
     default:
       return <></>;
   }
