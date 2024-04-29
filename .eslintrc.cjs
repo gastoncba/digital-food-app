@@ -16,5 +16,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-explicit-any': 'off',
+    'no-case-declarations': 'off',
   },
-}
+};

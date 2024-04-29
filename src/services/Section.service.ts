@@ -3,6 +3,15 @@ import { del, get, post, put } from './Fetch.service';
 
 const SERVICE_ENDPOINT = 'sections';
 
+interface CreateSectionDto {
+  name: string;
+  menuId: number;
+}
+
+interface UpdateSectionDto {
+  name: string;
+}
+
 export const SectionService = (() => {
   const getSections = async (menuId: number) => {
     try {
@@ -15,10 +24,7 @@ export const SectionService = (() => {
     }
   };
 
-  const createSection = async (newSection: {
-    name: string;
-    menuId: number;
-  }) => {
+  const createSection = async (newSection: CreateSectionDto) => {
     try {
       const section: Section = await post(SERVICE_ENDPOINT, newSection);
       return section;
@@ -37,7 +43,7 @@ export const SectionService = (() => {
 
   const updateSection = async (
     sectionId: number,
-    changes: { name: string }
+    changes: UpdateSectionDto
   ) => {
     try {
       const section: Section = await put(

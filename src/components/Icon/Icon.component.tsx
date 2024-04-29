@@ -9,6 +9,7 @@ import DragHandleIcon from '@mui/icons-material/DragHandle';
 import MoreHorizTwoTone from '@mui/icons-material/MoreHorizTwoTone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export type IconT =
   | 'PLUS'
@@ -19,6 +20,7 @@ export type IconT =
   | 'MENU'
   | 'DRAG-HANDLE'
   | 'MORE-HORIZONT'
+  | 'MORE-VERT'
   | 'DELETE'
   | 'EDIT';
 
@@ -50,6 +52,8 @@ export const Icon: React.FunctionComponent<IconProps> = ({
       return <DragHandleIcon sx={sx} className={className} />;
     case 'MORE-HORIZONT':
       return <MoreHorizTwoTone sx={sx} className={className} />;
+    case 'MORE-VERT':
+      return <MoreVertIcon sx={sx} className={className} />;
     case 'EDIT':
       return <EditIcon sx={sx} className={className} />;
     case 'DELETE':

@@ -29,12 +29,15 @@ type alignTitle = 'center' | 'inherit' | 'justify' | 'left' | 'right';
 interface Input {
   label: string;
   type: 'text' | 'password' | 'email' | 'number';
-  initialValue: { [key: string]: string };
+  initialValue: { [key: string]: string | number };
   constrain?: string;
   notRequired?: boolean;
   col?: number;
   min?: number;
   max?: number;
+  maxCharacters?: number;
+  rangeConstrain?: string;
+  maxCharactersConstrain?: string;
   multiline?: boolean;
   placeholder?: string;
   size?: 'medium' | 'small';
@@ -85,8 +88,9 @@ export const Form: React.FC<FormProps> = ({
             schema = {
               ...schema,
               [key]: requiredValidation.max(
-                input.max || 30,
-                input.constrain || 'maximo 30 caracteres'
+                input.maxCharacters || 30,
+                input.maxCharactersConstrain ||
+                  `maximo ${input.maxCharacters || 30} caracteres`
               ),
             };
             break;
@@ -112,16 +116,21 @@ export const Form: React.FC<FormProps> = ({
             break;
 
           case 'number':
+            const numberValidation = Yup.number().required(
+              input.constrain || `El campo ${labelLowerCase} es requerido`
+            );
             schema = {
               ...schema,
-              [key]: requiredValidation
+              [key]: numberValidation
                 .min(
                   input.min || 0,
-                  input.constrain || 'El numero debe estar entre 1 y 30'
+                  input.rangeConstrain ||
+                    `El numero debe estar entre ${input.min || 0} y ${input.max || 30}`
                 )
                 .max(
                   input.max || 30,
-                  input.constrain || 'El numero debe estar entre 1 y 30'
+                  input.rangeConstrain ||
+                    `El numero debe estar entre ${input.min || 0} y ${input.max || 30}`
                 ),
             };
             break;
@@ -237,7 +246,7 @@ export const Form: React.FC<FormProps> = ({
                     input.type === 'number'
                       ? {
                           max: input.max || 30,
-                          min: input.min || 4,
+                          min: input.min || 0,
                         }
                       : undefined
                   }

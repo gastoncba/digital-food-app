@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, useMediaQuery, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,9 +12,10 @@ import {
   Loader,
   showToast,
   GridList,
+  SettingCard,
 } from '../../components';
 import { AppStore } from '../../redux/store';
-import { SectionService } from '../../services/Sections.service';
+import { SectionService } from '../../services';
 import { Section } from '../../models';
 
 interface SectionProps {}
@@ -228,89 +229,6 @@ const SectionCard: React.FC<SectionCardProps> = ({
         onDelete={onDelete}
         onSettingOver={(over) => setIsOverSetting(over)}
       />
-    </Box>
-  );
-};
-
-interface SettingCardProps {
-  onUpdate: () => void;
-  onDelete: () => void;
-  onSettingOver: (over: boolean) => void;
-}
-
-const SettingCard: React.FC<SettingCardProps> = ({
-  onUpdate,
-  onDelete,
-  onSettingOver,
-}) => {
-  const [menu, toggleMenu] = useState<boolean>(false);
-  const [timer, setTimer] = useState<boolean>(false);
-  const isXs = useMediaQuery((theme: Theme) => theme.breakpoints.up('xs'));
-
-  useEffect(() => {
-    if (menu) {
-      setTimeout(() => {
-        setTimer(true);
-      }, 1000);
-    } else {
-      setTimer(false);
-    }
-    onSettingOver(menu);
-  }, [menu]);
-
-  return (
-    <Box
-      onMouseOver={() => toggleMenu(true)}
-      onMouseLeave={() => toggleMenu(false)}
-      sx={{
-        position: 'absolute',
-        flexDirection: 'row',
-        top: '5px',
-        borderRadius: 30,
-        width: '50%',
-        right: '24%',
-        ...(isXs && { width: '37%', right: '43%' }),
-        transform: 'translateX(-50%)',
-        transition: 'all 0.6s ease-in-out',
-        background: 'transparent',
-        ...(menu && {
-          background: 'white',
-        }),
-      }}
-    >
-      <Box sx={{ display: 'flex', columnGap: 1 }}>
-        <IconButton
-          buttonStyle={{ bgcolor: 'white', ':hover': { bgcolor: 'white' } }}
-          size="small"
-          icon={<Icon type="MORE-HORIZONT" sx={{ color: 'black' }} />}
-        />
-        {timer && (
-          <>
-            <IconButton
-              buttonStyle={{
-                bgcolor: 'white',
-                opacity: 0,
-                transition: 'opacity 1s ease-in-out',
-                ...(menu && { opacity: 1 }),
-              }}
-              onClick={onUpdate}
-              size="small"
-              icon={<Icon type="EDIT" sx={{ color: 'black' }} />}
-            />
-            <IconButton
-              buttonStyle={{
-                bgcolor: 'white',
-                opacity: 0,
-                transition: 'opacity 1s ease-in-out',
-                ...(menu && { opacity: 1 }),
-              }}
-              onClick={onDelete}
-              size="small"
-              icon={<Icon type="DELETE" sx={{ color: 'black' }} />}
-            />
-          </>
-        )}
-      </Box>
     </Box>
   );
 };

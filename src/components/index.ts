@@ -9,6 +9,9 @@ import { Modal } from './Modal/Modal.component';
 import { showToast } from './CustomToast/Toast.component';
 import { GridList } from './Grid/GridList.component';
 import { Banner } from './Banner/Banner.component';
+import { Card } from './Card/Card.component';
+import { Menu } from './Menu/Menu.component';
+import { SettingCard } from './SettingCard/SettingCard.component';
 
 export {
   Paragraph,
@@ -22,4 +25,7 @@ export {
   showToast,
   GridList,
   Banner,
+  Card,
+  Menu,
+  SettingCard,
 };
