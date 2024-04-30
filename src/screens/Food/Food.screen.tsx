@@ -120,11 +120,11 @@ export const FoodScreen: React.FC<FoodProps> = () => {
             initialValue: { ingredients: item.ingredients || '' },
             multiline: true,
             constrain: 'Ingredientes es requerido',
-            notRequired: true,
+            required: false,
           },
           {
             label: 'Precio',
-            type: 'number',
+            type: 'float',
             initialValue: { price: item.price || 20 },
             min: 10,
             max: 99999,
@@ -137,7 +137,7 @@ export const FoodScreen: React.FC<FoodProps> = () => {
             multiline: true,
             constrain: 'La foto es requerida',
             maxCharacters: 200,
-            notRequired: true,
+            required: false,
           },
         ]}
         onAction={(values: any) => action({ ...item, ...values })}

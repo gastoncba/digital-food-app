@@ -28,10 +28,10 @@ type alignTitle = 'center' | 'inherit' | 'justify' | 'left' | 'right';
 
 interface Input {
   label: string;
-  type: 'text' | 'password' | 'email' | 'number';
+  type: 'text' | 'password' | 'email' | 'number' | 'float';
   initialValue: { [key: string]: string | number };
   constrain?: string;
-  notRequired?: boolean;
+  required?: boolean;
   col?: number;
   min?: number;
   max?: number;
@@ -73,12 +73,13 @@ export const Form: React.FC<FormProps> = ({
     let schema: ObjectShape = {};
 
     inputs.forEach((input) => {
+      const { required = true } = input;
       const key = Object.keys(input.initialValue)[0];
       const labelLowerCase = input.label.toLowerCase();
 
       const baseValidation = Yup.string().trim();
 
-      if (!input.notRequired) {
+      if (required) {
         const requiredValidation = baseValidation.required(
           input.constrain || `El campo ${labelLowerCase} es requerido`
         );
@@ -205,6 +206,7 @@ export const Form: React.FC<FormProps> = ({
       <form onSubmit={formik.handleSubmit} style={styles}>
         <Grid container spacing={2}>
           {inputs.map((input, index) => {
+            const { required = true } = input;
             return (
               <Grid item xs={12} sm={input.col && input.col} key={index}>
                 <TextField
@@ -234,7 +236,7 @@ export const Form: React.FC<FormProps> = ({
                       Object.keys(input.initialValue)[0]
                     ] as React.ReactNode)
                   }
-                  required={input.notRequired ? false : true}
+                  required={required}
                   InputProps={
                     input.type === 'password'
                       ? {
@@ -243,10 +245,11 @@ export const Form: React.FC<FormProps> = ({
                       : undefined
                   }
                   inputProps={
-                    input.type === 'number'
+                    input.type === 'number' || input.type === 'float'
                       ? {
                           max: input.max || 30,
                           min: input.min || 0,
+                          step: input.type === 'float' ? 'any' : undefined,
                         }
                       : undefined
                   }
