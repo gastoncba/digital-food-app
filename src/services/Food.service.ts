@@ -33,6 +33,15 @@ export const FoodService = (() => {
     }
   };
 
+  const getFood = async (foodId: number) => {
+    try {
+      const food: Food = await get(SERVICE_ENDPOINT + '/' + foodId);
+      return food;
+    } catch (error) {
+      throw newError('GET-FOOD-DETAIL-FAIL', error);
+    }
+  };
+
   const createFood = async (newFood: CreateFoodDto) => {
     try {
       const food = await post(SERVICE_ENDPOINT, newFood);
@@ -61,6 +70,7 @@ export const FoodService = (() => {
 
   type FoodServiceError =
     | 'GET-FOODS-FAIL'
+    | 'GET-FOOD-DETAIL-FAIL'
     | 'POST-FOODS-FAIL'
     | 'PUT-FOODS-FAIL'
     | 'DELETE-FOODS-FAIL';
@@ -72,5 +82,5 @@ export const FoodService = (() => {
     };
   };
 
-  return { getFoods, createFood, updateFood, deleteFood };
+  return { getFoods, createFood, updateFood, deleteFood, getFood };
 })();

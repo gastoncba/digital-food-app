@@ -10,6 +10,7 @@ import MoreHorizTwoTone from '@mui/icons-material/MoreHorizTwoTone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export type IconT =
   | 'PLUS'
@@ -22,7 +23,8 @@ export type IconT =
   | 'MORE-HORIZONT'
   | 'MORE-VERT'
   | 'DELETE'
-  | 'EDIT';
+  | 'EDIT'
+  | 'EXPAND-MORE';
 
 export interface IconProps {
   type: IconT;
@@ -58,6 +60,8 @@ export const Icon: React.FunctionComponent<IconProps> = ({
       return <EditIcon sx={sx} className={className} />;
     case 'DELETE':
       return <DeleteIcon sx={sx} className={className} />;
+    case 'EXPAND-MORE':
+      return <ExpandMoreIcon sx={sx} className={className} />;
     default:
       return <></>;
   }

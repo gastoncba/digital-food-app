@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Paragraph,
@@ -25,6 +25,7 @@ interface FoodProps {}
 
 export const FoodScreen: React.FC<FoodProps> = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const state: CustomizedState = location.state;
   const { section } = state;
   const [foods, setFoods] = useState<Food[]>([]);
@@ -113,6 +114,7 @@ export const FoodScreen: React.FC<FoodProps> = () => {
             initialValue: { description: item.description || '' },
             multiline: true,
             constrain: 'Descripción es requerida',
+            maxCharacters: 200,
           },
           {
             label: 'Ingredientes',
@@ -191,6 +193,11 @@ export const FoodScreen: React.FC<FoodProps> = () => {
                             },
                           }),
                       }}
+                      onClickArea={() =>
+                        navigate('/app/foodDetail', {
+                          state: { foodId: item.id, foodName: item.name },
+                        })
+                      }
                     />
                   )}
                 />

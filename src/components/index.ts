@@ -12,6 +12,8 @@ import { Banner } from './Banner/Banner.component';
 import { Card } from './Card/Card.component';
 import { Menu } from './Menu/Menu.component';
 import { SettingCard } from './SettingCard/SettingCard.component';
+import { Collapse } from './Collapse/Collapse.component';
+import { Divider } from './Divider/Divider.component';
 
 export {
   Paragraph,
@@ -28,4 +30,6 @@ export {
   Card,
   Menu,
   SettingCard,
+  Collapse,
+  Divider,
 };
