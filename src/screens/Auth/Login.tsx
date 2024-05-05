@@ -18,7 +18,7 @@ export const Login: React.FC<LoginProps> = () => {
   const login = async (values: LoginValues) => {
     const result = await AuthService.login(values);
     dispatch(createMenu(result.menu));
-    navigate('/app/home');
+    navigate('/admin/home');
   };
 
   return (

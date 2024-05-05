@@ -15,7 +15,7 @@ export const StorageService = (() => {
     return at;
   };
 
-  type StorageServiceError = 'TOKENS-NOT-FOUND';
+  type StorageServiceError = 'TOKENS-NOT-FOUND' | 'MENU-ID-NOT-FOUND';
 
   const newError = (code: StorageServiceError, error?: any) => {
     return {
@@ -24,5 +24,9 @@ export const StorageService = (() => {
     };
   };
 
-  return { saveToken, deleteTokens, getTokens };
+  return {
+    saveToken,
+    deleteTokens,
+    getTokens,
+  };
 })();

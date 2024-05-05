@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 
 import { Login } from './Login';
+import { Signup } from './Signup';
 
 interface AuthProps {}
 
@@ -20,7 +21,7 @@ export const AuthScreen: React.FC<AuthProps> = () => {
       case 'login':
         return <Login />;
       case 'signup':
-        return <div>signup</div>;
+        return <Signup />;
       default:
         return <Login />;
     }

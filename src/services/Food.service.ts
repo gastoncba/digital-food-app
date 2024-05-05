@@ -22,10 +22,12 @@ interface UpdateFoodDto {
 }
 
 export const FoodService = (() => {
-  const getFoods = async (sectionId: number) => {
+  const getFoods = async (sectionId: number, queryParams?: string) => {
     try {
       const foods: Food[] = await get(
-        SERVICE_ENDPOINT + '/section/' + sectionId
+        SERVICE_ENDPOINT + '/section/' + sectionId,
+        queryParams,
+        false
       );
       return foods;
     } catch (error) {
@@ -35,7 +37,11 @@ export const FoodService = (() => {
 
   const getFood = async (foodId: number) => {
     try {
-      const food: Food = await get(SERVICE_ENDPOINT + '/' + foodId);
+      const food: Food = await get(
+        SERVICE_ENDPOINT + '/' + foodId,
+        undefined,
+        false
+      );
       return food;
     } catch (error) {
       throw newError('GET-FOOD-DETAIL-FAIL', error);

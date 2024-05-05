@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Box, useMediaQuery, Theme } from '@mui/material';
+
 import {
   Card,
   Collapse,
@@ -10,7 +12,6 @@ import {
   showToast,
 } from '../../components';
 import { FoodService } from '../../services';
-import { Box } from '@mui/material';
 import { Food } from '../../models';
 
 interface FoodDetailProps {}
@@ -36,6 +37,8 @@ export const FoodDetail: React.FC<FoodDetailProps> = () => {
   const [food, setFood] = useState<Food>(FoodEmpty);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<boolean>(false);
+  const isSm = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+  const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   useEffect(() => {
     const getFood = async () => {
@@ -44,7 +47,10 @@ export const FoodDetail: React.FC<FoodDetailProps> = () => {
         setFood(food);
         setIsLoading(false);
       } catch (error) {
-        showToast({ message: 'Error al cargar la comida' + foodName });
+        showToast({
+          message: 'Error al cargar la comida' + foodName,
+          type: 'error',
+        });
       }
     };
 
@@ -56,7 +62,7 @@ export const FoodDetail: React.FC<FoodDetailProps> = () => {
       {isLoading ? (
         <Loader sx={{ py: 2 }} />
       ) : (
-        <Box sx={{ width: '30%', p: 2 }}>
+        <Box sx={{ width: isMd ? '30%' : isSm ? '50%' : '100%', p: 2 }}>
           <Card title={foodName} coverImage={food.photo}>
             <Box
               sx={{

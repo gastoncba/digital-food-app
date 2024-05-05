@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Icon,
@@ -18,6 +18,11 @@ import { AppStore } from '../../redux/store';
 import { SectionService } from '../../services';
 import { Section } from '../../models';
 
+interface CustomizedState {
+  isAdmin: boolean;
+  menuId: number;
+}
+
 interface SectionProps {}
 
 export const SectionScreen: React.FC<SectionProps> = () => {
@@ -27,11 +32,16 @@ export const SectionScreen: React.FC<SectionProps> = () => {
   const [form, setForm] = useState<any>(null);
   const menuState = useSelector((store: AppStore) => store.menu);
   const navigate = useNavigate();
+  const location = useLocation();
+  const state: CustomizedState = location.state;
+  const { isAdmin, menuId } = state;
 
   const getSections = async () => {
     setIsLoading(true);
     try {
-      const sections = await SectionService.getSections(menuState.id);
+      const sections = await SectionService.getSections(
+        isAdmin ? menuState.id : menuId
+      );
       setSections(sections);
     } catch (error) {
       showToast({ message: 'Error al cargar las secciones', type: 'error' });
@@ -44,7 +54,7 @@ export const SectionScreen: React.FC<SectionProps> = () => {
     try {
       await SectionService.createSection({
         name: values.name,
-        menuId: menuState.id,
+        menuId: isAdmin ? menuState.id : menuId,
       });
       getSections();
       showToast({ message: 'Sección creada con éxito', type: 'success' });
@@ -104,15 +114,17 @@ export const SectionScreen: React.FC<SectionProps> = () => {
       <Box sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', columnGap: 3, alignItems: 'baseline' }}>
           <Paragraph text={'Secciones'} variant="h3" />
-          <IconButton
-            icon={<Icon type="PLUS" sx={{ color: 'white' }} />}
-            size="small"
-            onClick={() => buildForm({}, createSection)}
-            buttonStyle={{
-              bgcolor: 'primary.main',
-              ':hover': { bgcolor: 'primary.main' },
-            }}
-          />
+          {isAdmin && (
+            <IconButton
+              icon={<Icon type="PLUS" sx={{ color: 'white' }} />}
+              size="small"
+              onClick={() => buildForm({}, createSection)}
+              buttonStyle={{
+                bgcolor: 'primary.main',
+                ':hover': { bgcolor: 'primary.main' },
+              }}
+            />
+          )}
         </Box>
         {isLoading ? (
           <Loader sx={{ py: 2 }} />
@@ -123,8 +135,11 @@ export const SectionScreen: React.FC<SectionProps> = () => {
               renderItem={(item: Section) => (
                 <SectionCard
                   title={item.name}
+                  disabledSettings={!isAdmin}
                   onClick={() =>
-                    navigate('/app/foods', { state: { section: item } })
+                    navigate(!isAdmin ? '/app/foods' : '/admin/foods', {
+                      state: { section: item, isAdmin },
+                    })
                   }
                   onUpdate={() => buildForm(item, updateSection)}
                   onDelete={() =>
@@ -164,6 +179,7 @@ interface SectionCardProps {
   onUpdate: () => void;
   onDelete: () => void;
   onClick: () => void;
+  disabledSettings: boolean;
 }
 
 const SectionCard: React.FC<SectionCardProps> = ({
@@ -173,6 +189,7 @@ const SectionCard: React.FC<SectionCardProps> = ({
   onUpdate,
   onDelete,
   onClick,
+  disabledSettings,
 }) => {
   const [hover, setHover] = useState<boolean>(false);
   const [isOverSetting, setIsOverSetting] = useState<boolean>(false);
@@ -224,11 +241,13 @@ const SectionCard: React.FC<SectionCardProps> = ({
           }),
         }}
       />
-      <SettingCard
-        onUpdate={onUpdate}
-        onDelete={onDelete}
-        onSettingOver={(over) => setIsOverSetting(over)}
-      />
+      {!disabledSettings && (
+        <SettingCard
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+          onSettingOver={(over) => setIsOverSetting(over)}
+        />
+      )}
     </Box>
   );
 };

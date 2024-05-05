@@ -19,6 +19,7 @@ import { FoodService } from '../../services';
 
 interface CustomizedState {
   section: Section;
+  isAdmin: boolean;
 }
 
 interface FoodProps {}
@@ -27,7 +28,7 @@ export const FoodScreen: React.FC<FoodProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const state: CustomizedState = location.state;
-  const { section } = state;
+  const { section, isAdmin } = state;
   const [foods, setFoods] = useState<Food[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -157,15 +158,17 @@ export const FoodScreen: React.FC<FoodProps> = () => {
         />
         <Box sx={{ display: 'flex', columnGap: 3, alignItems: 'baseline' }}>
           <Paragraph text={'Comidas'} variant="h3" sx={{ py: 2 }} />
-          <IconButton
-            icon={<Icon type="PLUS" sx={{ color: 'white' }} />}
-            size="small"
-            onClick={() => buildForm({}, createFood)}
-            buttonStyle={{
-              bgcolor: 'primary.main',
-              ':hover': { bgcolor: 'primary.main' },
-            }}
-          />
+          {isAdmin && (
+            <IconButton
+              icon={<Icon type="PLUS" sx={{ color: 'white' }} />}
+              size="small"
+              onClick={() => buildForm({}, createFood)}
+              buttonStyle={{
+                bgcolor: 'primary.main',
+                ':hover': { bgcolor: 'primary.main' },
+              }}
+            />
+          )}
         </Box>
         {isLoading ? (
           <Loader />
@@ -179,24 +182,31 @@ export const FoodScreen: React.FC<FoodProps> = () => {
                     <Card
                       title={item.name}
                       coverImage={item.photo}
-                      settingIcons={{
-                        onUpdate: () => buildForm(item, updateFood),
-                        onDelete: () =>
-                          showToast({
-                            message: 'Desea eliminar esta comida ? ',
-                            type: 'confirmation',
-                            confirmOptions: {
-                              confirm: {
-                                onClick: () => deleteFood(item.id),
-                                title: 'Eliminar',
-                              },
-                            },
-                          }),
-                      }}
+                      settingIcons={
+                        isAdmin
+                          ? {
+                              onUpdate: () => buildForm(item, updateFood),
+                              onDelete: () =>
+                                showToast({
+                                  message: 'Desea eliminar esta comida ? ',
+                                  type: 'confirmation',
+                                  confirmOptions: {
+                                    confirm: {
+                                      onClick: () => deleteFood(item.id),
+                                      title: 'Eliminar',
+                                    },
+                                  },
+                                }),
+                            }
+                          : undefined
+                      }
                       onClickArea={() =>
-                        navigate('/app/foodDetail', {
-                          state: { foodId: item.id, foodName: item.name },
-                        })
+                        navigate(
+                          isAdmin ? '/admin/foodDetail' : '/app/foodDetail',
+                          {
+                            state: { foodId: item.id, foodName: item.name },
+                          }
+                        )
                       }
                     />
                   )}

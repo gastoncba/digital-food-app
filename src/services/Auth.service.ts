@@ -13,6 +13,7 @@ export const AuthService = (() => {
         false
       );
       StorageService.saveToken(result.token.access_token);
+      result.menu.isAdmin = true;
       return result;
     } catch (error) {
       throw newError('LOGIN-FAIL', error);

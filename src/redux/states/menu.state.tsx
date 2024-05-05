@@ -5,6 +5,7 @@ export const MenuEmptyState: Menu = {
   id: 0,
   name: '',
   photo: null,
+  isAdmin: false,
 };
 
 export const menuSlice = createSlice({

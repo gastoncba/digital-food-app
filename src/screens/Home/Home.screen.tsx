@@ -1,11 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
+import QRCode from 'react-qr-code';
 
 import { AppStore } from '../../redux/store';
 import { Button, Paragraph } from '../../components';
 import { resetMenu } from '../../redux/states';
 import { AuthService } from '../../services';
+import { APP } from '../../settings';
 
 interface HomeProps {}
 
@@ -37,6 +39,12 @@ export const HomeScreen: React.FC<HomeProps> = () => {
           },
         }}
       />
+      <Box>
+        <QRCode
+          id="QRCode"
+          value={APP.URL + `/app/${menuState.name}/${menuState.id}`}
+        />
+      </Box>
     </Box>
   );
 };

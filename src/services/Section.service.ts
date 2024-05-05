@@ -13,10 +13,12 @@ interface UpdateSectionDto {
 }
 
 export const SectionService = (() => {
-  const getSections = async (menuId: number) => {
+  const getSections = async (menuId: number, queryParams?: string) => {
     try {
       const sections: Section[] = await get(
-        SERVICE_ENDPOINT + '/menu/' + menuId
+        SERVICE_ENDPOINT + '/menu/' + menuId,
+        queryParams,
+        false
       );
       return sections;
     } catch (error) {

@@ -5,3 +5,4 @@ export * from './NotFound/NotFound.screen';
 export * from './Section/Section.screen';
 export * from './Food/Food.screen';
 export * from './FoodDetail/FoodDetail.screen';
+export * from './Menu/Menu.screen';
