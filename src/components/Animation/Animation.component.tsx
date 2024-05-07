@@ -6,12 +6,14 @@ interface AnimationProps {
   children: React.ReactNode;
   type: animationType;
   duration?: number;
+  delay?: number;
 }
 
 export const Animation: React.FC<AnimationProps> = ({
   children,
   type,
   duration,
+  delay,
 }) => {
   switch (type) {
     case 'SLICE':
@@ -19,7 +21,7 @@ export const Animation: React.FC<AnimationProps> = ({
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: duration || 0.5, delay: 1 }}
+          transition={{ duration: duration || 0.5, delay: delay || 1 }}
         >
           {children}
         </motion.div>
@@ -29,7 +31,7 @@ export const Animation: React.FC<AnimationProps> = ({
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ duration: duration || 0.5 }}
+          transition={{ duration: duration || 0.5, delay: delay || 0 }}
         >
           {children}
         </motion.div>

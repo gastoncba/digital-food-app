@@ -42,7 +42,7 @@ export const Signup: React.FC<SignupProps> = () => {
       setKey(key);
       setName(menu.name);
 
-      dispatch(createMenu(result.menu));
+      dispatch(createMenu({ ...result.menu, isAdmin: true }));
       setShowSignup(false);
     } catch (error) {
       showToast({ message: 'Error al intentar crear el menú', type: 'error' });

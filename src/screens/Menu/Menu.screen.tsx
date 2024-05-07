@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { MenuService } from '../../services';
 import { Button, Loader, Paragraph, showToast } from '../../components';
 import { Menu } from '../../models';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { createMenu } from '../../redux/states';
 
 interface MenuProps {}
@@ -30,7 +30,7 @@ export const MenuScreen: React.FC<MenuProps> = () => {
         if (menuId) {
           const id = Number.parseInt(menuId);
           const menu = await MenuService.getMenuById(id);
-          dispatch(createMenu(menu));
+          dispatch(createMenu({ ...menu, isAdmin: false }));
           setMenu(menu);
           setIsLoading(false);
         } else {
@@ -48,20 +48,32 @@ export const MenuScreen: React.FC<MenuProps> = () => {
   }, []);
 
   return (
-    <>
+    <Box sx={{ py: 2 }}>
       {isLoading ? (
-        <Loader sx={{ py: 2 }} />
+        <Loader />
       ) : (
-        <Box>
-          <Paragraph text={menu.name} variant="h5" />
+        <Container maxWidth={'md'}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 2 }}>
+            <Paragraph
+              text={'Bienvenido al Menú de ' + menu.name}
+              variant="h2"
+            />
+            <Paragraph
+              text={
+                '¡Entra y mira todos los exquisitos platos que tenemos disponibles!'
+              }
+              variant="h5"
+            />
+          </Box>
           <Button
             title="ver menu"
+            style={{ my: 2 }}
             onClick={() =>
               navigate('/app/sections', { state: { isAdmin: false, menuId } })
             }
           />
-        </Box>
+        </Container>
       )}
-    </>
+    </Box>
   );
 };

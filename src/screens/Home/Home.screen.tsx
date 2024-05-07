@@ -38,30 +38,36 @@ export const HomeScreen: React.FC<HomeProps> = () => {
         <Grid container columnSpacing={2} rowGap={2} sx={{ pt: 4 }}>
           <Grid item md={6}>
             <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}>
-              <Paragraph
-                text={'¡Crea tu menú digital hoy mismo!'}
-                variant="h4"
-                color="primary"
-              />
-              <Paragraph
-                text={
-                  'Los menús digitales transforman la experiencia gastronomica'
-                }
-                variant="h3"
-              />
-              {!lessToMd && (
+              <Animation type="SLICE" delay={0.2}>
+                <Paragraph
+                  text={'¡Crea tu menú digital hoy mismo!'}
+                  variant="h4"
+                  color="primary"
+                />
+              </Animation>
+              <Animation type="SLICE" delay={0.3}>
                 <Paragraph
                   text={
-                    'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
+                    'Los menús digitales transforman la experiencia gastronomica'
                   }
-                  color="GrayText"
-                  sx={{ mb: 1 }}
+                  variant="h3"
                 />
+              </Animation>
+              {!lessToMd && (
+                <Animation type="SLICE" delay={0.4}>
+                  <Paragraph
+                    text={
+                      'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
+                    }
+                    color="GrayText"
+                    sx={{ mb: 1 }}
+                  />
+                </Animation>
               )}
             </Box>
           </Grid>
           <Grid item md={6}>
-            <Animation type="SLICE" duration={0.5}>
+            <Animation type="SLICE" duration={0.5} delay={0.2}>
               <Box
                 sx={{
                   display: 'flex',
@@ -91,29 +97,33 @@ export const HomeScreen: React.FC<HomeProps> = () => {
                     sx={{ ...(lessToSm && { mt: 1 }) }}
                   />
                   {lessToMd && (
-                    <Paragraph
-                      text={
-                        'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
-                      }
-                      color="GrayText"
-                      sx={{ mb: 1 }}
-                    />
+                    <Animation type="SLICE" delay={0.4}>
+                      <Paragraph
+                        text={
+                          'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
+                        }
+                        color="GrayText"
+                        sx={{ mb: 1 }}
+                      />
+                    </Animation>
                   )}
                 </Box>
               </Box>
             </Animation>
           </Grid>
         </Grid>
-        <Button
-          title="Salir"
-          onClick={() => logout()}
-          style={{
-            width: '10%',
-            ':hover': {
-              bgcolor: 'black',
-            },
-          }}
-        />
+        <Animation type="SLICE" delay={0.4}>
+          <Button
+            title="Salir"
+            onClick={() => logout()}
+            style={{
+              width: '10%',
+              ':hover': {
+                bgcolor: 'black',
+              },
+            }}
+          />
+        </Animation>
       </Box>
       <Modal
         open={showModal}

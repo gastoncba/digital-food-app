@@ -1,7 +1,7 @@
 import { Menu } from '../models';
 import { MenuEmptyState } from '../redux/states';
 import { API } from '../settings';
-import { get, post } from './Fetch.service';
+import { get, post, put } from './Fetch.service';
 import { StorageService } from './private/Storage.service';
 
 const SERVICE_ENDPOINT = 'menus';
@@ -13,7 +13,6 @@ export const MenuService = (() => {
       const token = StorageService.getTokens();
       if (token.split('=')[0] !== 'CODE-MENU') {
         menu = await get(SERVICE_ENDPOINT);
-        menu.isAdmin = true;
       } else {
         const id = Number.parseInt(token.split('=')[1]);
         menu = await getMenuById(id);
@@ -33,7 +32,6 @@ export const MenuService = (() => {
         false,
         { 'x-api-key': API.API_KEY }
       );
-      menu.isAdmin = false;
       StorageService.saveToken('CODE-MENU=' + menuId);
       return menu;
     } catch (error) {
@@ -57,10 +55,23 @@ export const MenuService = (() => {
     }
   };
 
+  const updateMenu = async (
+    menuId: number,
+    changes: { name: string; photo: string | null }
+  ) => {
+    try {
+      const menu: Menu = await put(SERVICE_ENDPOINT + '/' + menuId, changes);
+      return menu;
+    } catch (error) {
+      throw newError('PUT-MENU-FAIL', error);
+    }
+  };
+
   type MenuServiceError =
     | 'GET-MENU-FAIL'
     | 'GET-MENU-BY-ID-FAIL'
-    | 'POST-MENU-FAIL';
+    | 'POST-MENU-FAIL'
+    | 'PUT-MENU-FAIL';
 
   const newError = (code: MenuServiceError, error?: any) => {
     return {
@@ -69,5 +80,5 @@ export const MenuService = (() => {
     };
   };
 
-  return { getMenu, getMenuById, createMenu };
+  return { getMenu, getMenuById, createMenu, updateMenu };
 })();

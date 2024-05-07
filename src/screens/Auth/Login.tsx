@@ -18,7 +18,7 @@ export const Login: React.FC<LoginProps> = () => {
   const login = async (values: LoginValues) => {
     try {
       const result = await AuthService.login(values);
-      dispatch(createMenu(result.menu));
+      dispatch(createMenu({ ...result.menu, isAdmin: true }));
       navigate('/admin/home');
     } catch (error) {
       showToast({ message: 'Error al intentar ingresar', type: 'error' });

@@ -18,6 +18,6 @@ export const menuSlice = createSlice({
   },
 });
 
-export const { createMenu, resetMenu } = menuSlice.actions;
+export const { createMenu, resetMenu, modifyMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;

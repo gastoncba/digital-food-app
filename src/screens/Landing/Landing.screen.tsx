@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Box, Grid, useMediaQuery, Theme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,13 +8,6 @@ interface LandingProps {}
 export const LandingScreen: React.FC<LandingProps> = () => {
   const navigate = useNavigate();
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
-  const [showButtons, setShowButtons] = useState<boolean>(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setShowButtons(true);
-    }, 2000);
-  }, []);
 
   return (
     <>
@@ -43,24 +35,22 @@ export const LandingScreen: React.FC<LandingProps> = () => {
                   color="GrayText"
                 />
               </Animation>
-              {showButtons && (
-                <Animation type="BOOM" duration={0.3}>
-                  <Box sx={{ display: 'flex', columnGap: 2, py: 2 }}>
-                    <Button
-                      title="Empezar"
-                      onClick={() =>
-                        navigate('/auth', { state: { type: 'signup' } })
-                      }
-                    />
-                    <Button
-                      title="Ingresar"
-                      onClick={() =>
-                        navigate('/auth', { state: { type: 'login' } })
-                      }
-                    />
-                  </Box>
-                </Animation>
-              )}
+              <Animation type="BOOM" duration={0.3} delay={2}>
+                <Box sx={{ display: 'flex', columnGap: 2, py: 2 }}>
+                  <Button
+                    title="Empezar"
+                    onClick={() =>
+                      navigate('/auth', { state: { type: 'signup' } })
+                    }
+                  />
+                  <Button
+                    title="Ingresar"
+                    onClick={() =>
+                      navigate('/auth', { state: { type: 'login' } })
+                    }
+                  />
+                </Box>
+              </Animation>
             </Box>
           </Grid>
           <Grid item md={6}>
