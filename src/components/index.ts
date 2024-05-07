@@ -14,6 +14,11 @@ import { Menu } from './Menu/Menu.component';
 import { SettingCard } from './SettingCard/SettingCard.component';
 import { Collapse } from './Collapse/Collapse.component';
 import { Divider } from './Divider/Divider.component';
+import { Alert } from './Alert/Alert.component';
+import { Tooltip } from './Tooltip/Tooltip.component';
+import { Image } from './Image/Image.component';
+import { Animation } from './Animation/Animation.component';
+import { Wrapper } from './Wrapper/Wrapper.component';
 
 export {
   Paragraph,
@@ -32,4 +37,9 @@ export {
   SettingCard,
   Collapse,
   Divider,
+  Alert,
+  Tooltip,
+  Image,
+  Animation,
+  Wrapper,
 };

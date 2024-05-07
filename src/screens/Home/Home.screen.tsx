@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box } from '@mui/material';
+import { Box, Grid, Theme, useMediaQuery } from '@mui/material';
 import QRCode from 'react-qr-code';
 
 import { AppStore } from '../../redux/store';
-import { Button, Paragraph } from '../../components';
+import { Animation, Button, Modal, Paragraph } from '../../components';
 import { resetMenu } from '../../redux/states';
 import { AuthService } from '../../services';
-import { APP } from '../../settings';
+import { APP, themeMaterial } from '../../settings';
+import { GenericsUtils } from '../../utils';
 
 interface HomeProps {}
 
+const { main } = themeMaterial.palette.primary;
+
 export const HomeScreen: React.FC<HomeProps> = () => {
   const menuState = useSelector((store: AppStore) => store.menu);
-
   const dispatch = useDispatch();
+  const lessToMd = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('md')
+  );
+  const lessToSm = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('sm')
+  );
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const logout = () => {
     setTimeout(() => {
@@ -24,27 +33,126 @@ export const HomeScreen: React.FC<HomeProps> = () => {
   };
 
   return (
-    <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', rowGap: 2 }}>
-      <Box sx={{ display: 'flex', columnGap: 1 }}>
-        <Paragraph text={'Menu digital de'} variant="h4" />
-        <Paragraph text={menuState.name} variant="h4" color="primary" />
-      </Box>
-      <Button
-        title="Salir"
-        onClick={() => logout()}
-        style={{
-          width: '10%',
-          ':hover': {
-            bgcolor: 'black',
-          },
-        }}
-      />
-      <Box>
-        <QRCode
-          id="QRCode"
-          value={APP.URL + `/app/${menuState.name}/${menuState.id}`}
+    <>
+      <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', rowGap: 2 }}>
+        <Grid container columnSpacing={2} rowGap={2} sx={{ pt: 4 }}>
+          <Grid item md={6}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}>
+              <Paragraph
+                text={'¡Crea tu menú digital hoy mismo!'}
+                variant="h4"
+                color="primary"
+              />
+              <Paragraph
+                text={
+                  'Los menús digitales transforman la experiencia gastronomica'
+                }
+                variant="h3"
+              />
+              {!lessToMd && (
+                <Paragraph
+                  text={
+                    'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
+                  }
+                  color="GrayText"
+                  sx={{ mb: 1 }}
+                />
+              )}
+            </Box>
+          </Grid>
+          <Grid item md={6}>
+            <Animation type="SLICE" duration={0.5}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  columnGap: 2,
+                  ...(lessToMd && { pt: 4 }),
+                  ...(lessToSm && { flexDirection: 'column' }),
+                }}
+              >
+                <Box>
+                  <QRCode
+                    style={{
+                      border: `5px solid ${main}`,
+                      borderRadius: '16px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => setShowModal(true)}
+                    value={APP.URL + `/app/${menuState.name}/${menuState.id}`}
+                  />
+                </Box>
+                <Box
+                  sx={{ display: 'flex', flexDirection: 'column', rowGap: 2 }}
+                >
+                  <Paragraph
+                    text={'QR de\n' + menuState.name}
+                    variant="h4"
+                    color="primary"
+                    sx={{ ...(lessToSm && { mt: 1 }) }}
+                  />
+                  {lessToMd && (
+                    <Paragraph
+                      text={
+                        'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
+                      }
+                      color="GrayText"
+                      sx={{ mb: 1 }}
+                    />
+                  )}
+                </Box>
+              </Box>
+            </Animation>
+          </Grid>
+        </Grid>
+        <Button
+          title="Salir"
+          onClick={() => logout()}
+          style={{
+            width: '10%',
+            ':hover': {
+              bgcolor: 'black',
+            },
+          }}
         />
       </Box>
-    </Box>
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        title={'QR del menú'}
+      >
+        <Box sx={{ border: `5px solid ${main}`, borderRadius: '16px', p: 2 }}>
+          <QRCode
+            style={{
+              height: 'auto',
+              maxWidth: '100%',
+              width: '100%',
+              borderRadius: '16px',
+            }}
+            viewBox={`0 0 256 256`}
+            id="box-id"
+            value={APP.URL + `/app/${menuState.name}/${menuState.id}`}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', columnGap: 1, pt: 1 }}>
+          <Button
+            title="Descargar QR"
+            onClick={() =>
+              GenericsUtils.downloadQR(
+                'QRCode',
+                'Menu-digital-de-' + menuState.name
+              )
+            }
+          />
+          <Button
+            title="Copiar enlace"
+            onClick={() =>
+              GenericsUtils.writeText(
+                APP.URL + `/app/${menuState.name}/${menuState.id}`
+              )
+            }
+          />
+        </Box>
+      </Modal>
+    </>
   );
 };

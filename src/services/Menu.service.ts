@@ -1,7 +1,7 @@
 import { Menu } from '../models';
 import { MenuEmptyState } from '../redux/states';
 import { API } from '../settings';
-import { get } from './Fetch.service';
+import { get, post } from './Fetch.service';
 import { StorageService } from './private/Storage.service';
 
 const SERVICE_ENDPOINT = 'menus';
@@ -41,7 +41,26 @@ export const MenuService = (() => {
     }
   };
 
-  type MenuServiceError = 'GET-MENU-FAIL' | 'GET-MENU-BY-ID-FAIL';
+  const createMenu = async (newMenu: {
+    name: string;
+    photo: string | null;
+  }) => {
+    try {
+      const result: { menu: Menu; key: string } = await post(
+        SERVICE_ENDPOINT,
+        newMenu,
+        false
+      );
+      return result;
+    } catch (error) {
+      throw newError('POST-MENU-FAIL', error);
+    }
+  };
+
+  type MenuServiceError =
+    | 'GET-MENU-FAIL'
+    | 'GET-MENU-BY-ID-FAIL'
+    | 'POST-MENU-FAIL';
 
   const newError = (code: MenuServiceError, error?: any) => {
     return {
@@ -50,5 +69,5 @@ export const MenuService = (() => {
     };
   };
 
-  return { getMenu, getMenuById };
+  return { getMenu, getMenuById, createMenu };
 })();

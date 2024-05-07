@@ -10,6 +10,7 @@ import {
   FoodScreen,
   FoodDetail,
   MenuScreen,
+  ConfigScreen,
 } from '../screens';
 import { ProtectedRoute } from './ProtectedRoute.routes';
 import { Navbar } from '../components';
@@ -73,7 +74,7 @@ export const Router: React.FC<RouterProps> = () => {
                   <Route path="/foods" element={<FoodScreen />} />
                   <Route path="/foodDetail" element={<FoodDetail />} />
                 </Route>
-                <Route path="/config" element={<div>config</div>} />
+                <Route path="/config" element={<ConfigScreen />} />
                 <Route path="*" element={<NotFoundScreen />} />
               </Route>
             </Routes>

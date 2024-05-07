@@ -5,6 +5,8 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  SxProps,
+  Theme,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -26,6 +28,18 @@ type variantTitle =
   | 'overline';
 type alignTitle = 'center' | 'inherit' | 'justify' | 'left' | 'right';
 
+type colorTitle =
+  | 'primary'
+  | 'primary.light'
+  | 'primary.dark'
+  | 'GrayText'
+  | 'secondary'
+  | 'secondary.light'
+  | 'secondary.dark'
+  | 'white'
+  | 'warning.main'
+  | 'success.main';
+
 interface Input {
   label: string;
   type: 'text' | 'password' | 'email' | 'number' | 'float';
@@ -45,7 +59,13 @@ interface Input {
 
 interface FormProps {
   inputs: Input[];
-  title?: { text?: string; variant?: variantTitle; align?: alignTitle };
+  title?: {
+    text?: string;
+    variant?: variantTitle;
+    align?: alignTitle;
+    color?: colorTitle;
+    styles?: SxProps<Theme>;
+  };
   styles?: CSSProperties;
   children?: React.ReactNode;
   submitText?: string;
@@ -200,7 +220,8 @@ export const Form: React.FC<FormProps> = ({
           text={title.text}
           variant={title.variant || 'h1'}
           align={title.align || 'center'}
-          sx={{ fontSize: 50, mb: 2 }}
+          color={title.color}
+          sx={{ fontSize: 50, mb: 2, ...title.styles }}
         />
       )}
       <form onSubmit={formik.handleSubmit} style={styles}>

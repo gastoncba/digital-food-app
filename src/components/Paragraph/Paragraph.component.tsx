@@ -43,6 +43,7 @@ export const Paragraph: React.FunctionComponent<Props> = (props: Props) => {
         sx={{
           fontSize: props.fontSize,
           fontWeight: props.fontWeight,
+          whiteSpace: 'pre-line',
           ...props.sx,
         }}
         className={props.className}

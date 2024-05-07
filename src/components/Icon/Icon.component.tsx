@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export type IconT =
   | 'PLUS'
@@ -24,7 +25,8 @@ export type IconT =
   | 'MORE-VERT'
   | 'DELETE'
   | 'EDIT'
-  | 'EXPAND-MORE';
+  | 'EXPAND-MORE'
+  | 'COPY';
 
 export interface IconProps {
   type: IconT;
@@ -62,6 +64,8 @@ export const Icon: React.FunctionComponent<IconProps> = ({
       return <DeleteIcon sx={sx} className={className} />;
     case 'EXPAND-MORE':
       return <ExpandMoreIcon sx={sx} className={className} />;
+    case 'COPY':
+      return <ContentCopyIcon sx={sx} className={className} />;
     default:
       return <></>;
   }
