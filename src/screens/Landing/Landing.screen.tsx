@@ -15,10 +15,10 @@ export const LandingScreen: React.FC<LandingProps> = () => {
         <Grid container columnSpacing={2} rowSpacing={2}>
           <Grid item md={6}>
             <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 1 }}>
-              <Animation type="SLICE" duration={0.5}>
+              <Animation type="LEFT" duration={0.5}>
                 <Paragraph text={'Digital Food'} color="primary" variant="h3" />
               </Animation>
-              <Animation type="SLICE" duration={0.7}>
+              <Animation type="LEFT" duration={0.7}>
                 <Paragraph
                   text={
                     'Bienvenido a la solución moderna para crear menús digitales para tu comercio'
@@ -27,7 +27,7 @@ export const LandingScreen: React.FC<LandingProps> = () => {
                   fontSize={50}
                 />
               </Animation>
-              <Animation type="SLICE" duration={0.97}>
+              <Animation type="LEFT" duration={0.97}>
                 <Paragraph
                   text={
                     'All the best restaurants, from quick service to Michelin star, choose to take payments with sunday'
@@ -35,7 +35,7 @@ export const LandingScreen: React.FC<LandingProps> = () => {
                   color="GrayText"
                 />
               </Animation>
-              <Animation type="BOOM" duration={0.3} delay={2}>
+              <Animation type="BOOM" duration={0.3} delay={0.3}>
                 <Box sx={{ display: 'flex', columnGap: 2, py: 2 }}>
                   <Button
                     title="Empezar"

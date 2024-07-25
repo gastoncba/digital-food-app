@@ -38,14 +38,14 @@ export const HomeScreen: React.FC<HomeProps> = () => {
         <Grid container columnSpacing={2} rowGap={2} sx={{ pt: 4 }}>
           <Grid item md={6}>
             <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}>
-              <Animation type="SLICE" delay={0.2}>
+              <Animation type="LEFT" delay={0.2}>
                 <Paragraph
                   text={'¡Crea tu menú digital hoy mismo!'}
                   variant="h4"
                   color="primary"
                 />
               </Animation>
-              <Animation type="SLICE" delay={0.3}>
+              <Animation type="LEFT" delay={0.3}>
                 <Paragraph
                   text={
                     'Los menús digitales transforman la experiencia gastronomica'
@@ -54,7 +54,7 @@ export const HomeScreen: React.FC<HomeProps> = () => {
                 />
               </Animation>
               {!lessToMd && (
-                <Animation type="SLICE" delay={0.4}>
+                <Animation type="LEFT" delay={0.4}>
                   <Paragraph
                     text={
                       'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
@@ -67,7 +67,7 @@ export const HomeScreen: React.FC<HomeProps> = () => {
             </Box>
           </Grid>
           <Grid item md={6}>
-            <Animation type="SLICE" duration={0.5} delay={0.2}>
+            <Animation type="LEFT" duration={0.5} delay={0.2}>
               <Box
                 sx={{
                   display: 'flex',
@@ -97,7 +97,7 @@ export const HomeScreen: React.FC<HomeProps> = () => {
                     sx={{ ...(lessToSm && { mt: 1 }) }}
                   />
                   {lessToMd && (
-                    <Animation type="SLICE" delay={0.4}>
+                    <Animation type="LEFT" delay={0.4}>
                       <Paragraph
                         text={
                           'Completa tu menú con las secciones y comidas, y luego escanea el código QR para verlo'
@@ -112,7 +112,7 @@ export const HomeScreen: React.FC<HomeProps> = () => {
             </Animation>
           </Grid>
         </Grid>
-        <Animation type="SLICE" delay={0.4}>
+        <Animation type="LEFT" delay={0.4}>
           <Button
             title="Salir"
             onClick={() => logout()}
